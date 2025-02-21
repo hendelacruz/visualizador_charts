@@ -7,8 +7,10 @@ environment:
   sdk: ^3.6.1
 
 dependencies:
+  fl_chart: 0.70.2
   flutter:
     sdk: flutter
+  shared_preferences: 2.5.2
 
 dev_dependencies:
   flutter_test:

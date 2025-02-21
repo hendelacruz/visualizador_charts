@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:visualizador_charts/data/data_sources/local_data_source.dart';
+import 'package:visualizador_charts/main_app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await localDataSource.initialization();
   runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
 }
