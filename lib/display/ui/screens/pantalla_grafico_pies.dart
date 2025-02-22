@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:visualizador_charts/data/models/pie_model.dart';
 import 'package:visualizador_charts/data/repositories/pie_repository.dart';
+import 'package:visualizador_charts/display/extension/string_extension.dart';
 import 'package:visualizador_charts/display/ui/components/input_grafico.dart';
 import 'package:visualizador_charts/display/ui/utils/utils.dart';
 
@@ -17,6 +18,15 @@ class _PantallaGraficoPiesState extends State<PantallaGraficoPies> {
   final _etiquetaTextController = TextEditingController();
   final _valorTextController = TextEditingController();
   int touchedIndex = 0;
+  final _colors = [
+    Color(0xFF2196F3),
+    Color(0xFFFFC300),
+    Color(0xFF3BFF49),
+    Color(0xFF6E1BFF),
+    Color(0xFFFF3AF2),
+    Color(0xFFE80054),
+    Color(0xFF50E4FF),
+  ];
 
   PieModel? _pieModel;
 
@@ -28,6 +38,7 @@ class _PantallaGraficoPiesState extends State<PantallaGraficoPies> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     if (_pieModel == null) {
       return Scaffold(
@@ -43,14 +54,19 @@ class _PantallaGraficoPiesState extends State<PantallaGraficoPies> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 180,
-              child: (_pieModel!.etiqueta.isNotEmpty)
-                  ? _pieChartOk()
-                  : Text('No existe datos a mostrar'),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 180,
+                child: (_pieModel!.etiqueta.isNotEmpty)
+                    ? _pieChartOk()
+                    : Text('No existe datos a mostrar'),
+              ),
             ),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Form(
             key: _identificadorFormulario,
@@ -152,12 +168,12 @@ class _PantallaGraficoPiesState extends State<PantallaGraficoPies> {
     return _pieModel!.valor.asMap().entries.map((elemento) {
       final isTouched = elemento.key == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final radius = isTouched ? 85.0 : 80.0;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
       return PieChartSectionData(
-        color: Colors.blue,
-        value: 40,
-        title: '40%',
+        color: _colors[elemento.key],
+        value: elemento.value,
+        title: elemento.value.toString().cadenaConSimbolo(),
         radius: radius,
         titleStyle: TextStyle(
           fontSize: fontSize,
